@@ -5,24 +5,14 @@ const app = express();
 
 
 //this will only handle GET call
-app.get("/user",(req,res)=>{
+///user/:userID/:name/:password - this is called dynamic routing
+app.get("/user/:userID/:name/:password",(req,res)=>{
+    console.log(req.params);
     res.send({firstname:"Balaji", lastname:"Selvaraj"});
 });
 
 
-app.post("/user",(req,res)=>{
-    res.send("Data saved to the Database.");
-});
 
-app.delete("/user",(req,res)=>{
-    res.send("Deleted sucessfully");
-});
-
-
-//this will match all the http method API call to test
-app.use("/test",(req, res)=> {
-    res.send("Vanakamda thambi, am from server!")
-});
 
 
 app.listen(3000, ()=>{
