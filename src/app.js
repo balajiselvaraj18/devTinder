@@ -2,6 +2,9 @@ const express = require("express");
 
 const app = express();
 
+const { adminAuth } = require("./middlewares/auth");
+
+
 
 
 //this will only handle GET call
@@ -11,27 +14,37 @@ const app = express();
 //     res.send({firstname:"Balaji", lastname:"Selvaraj"});
 // });
 
-app.use("/user", 
-    
-  [  
-    (req, res, next)=>{
-    console.log("Routing Handler 1");
-    res.send("Response!!!");
-    next();
-},
-(req, res)=>{
 
-    console.log("Routing Handler 2");
-    res.send("Response 2");
-},
-  ],
+app.use("/admin", adminAuth);
 
 
-(req, res)=>{
+app.use("/admin/getAllData", (req,res,next)=>{
+    res.send("All Data");
+    }
 
-    console.log("Routing Handler 3");
-    res.send("Response 3");
-});
+);
+
+app.use("/admin/DeleteAllData", (req,res,next)=>{
+    res.send("Delete Data");
+    }
+
+);
+
+
+
+app.get(
+    "/user", 
+    (req, res, next) => {
+        console.log("Routing Handler 1");
+        next(); // Pass control to the next handler
+    },
+    (req, res) => { // No need for "next" here since it's the final response
+        console.log("Routing Handler 2");
+        res.send("Response 2!!!");
+    }
+);
+
+
 
 
 
